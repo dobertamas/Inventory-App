@@ -4,3 +4,25 @@
 *.jar
 
 *.iml
+
+*.bin
+
+*.lock
+
+.idea/
+
+.idea/compiler.xml
+
+.idea/copyright/profiles_settings.xml
+
+.idea/gradle.xml
+
+.idea/libraries/animated_vector_drawable_26_0_0_alpha1.xml
+
+.idea/libraries/appcompat_v7_26_0_0_alpha1.xml
+
+.idea/libraries/support_compat_26_0_0_alpha1.xml
+
+.idea/libraries/support_annotations_26_0_0_alpha1.xml
+
+.idea/libraries/rules_0_5.xml
