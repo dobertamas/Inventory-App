@@ -8,14 +8,18 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.android.inventoryapp.data.ProductContract.ProductEntry;
 
 public class ProductListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    public static final String LOG_TAG = ProductListActivity.class.getSimpleName();
 
     /**
      * Identifier for the product data loader
@@ -36,18 +40,20 @@ public class ProductListActivity extends AppCompatActivity implements
         ListView productListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
-     /*   View emptyView = findViewById(R.id.empty_view);
-        productListView.setEmptyView(emptyView);*/
+        View emptyView = findViewById(R.id.empty_view);
+        productListView.setEmptyView(emptyView);
 
         // Setup an Adapter to create a list item for each row of product data in the Cursor.
         // There is no product data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new ProductCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
+        Log.d(LOG_TAG, " Adapter was set ");
 
         // TODO: Setup the item click listener
 
         // Kick off the loader
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
+        Log.d(LOG_TAG, " Kicked off the loader ");
     }
 
     /**
@@ -67,6 +73,7 @@ public class ProductListActivity extends AppCompatActivity implements
         // into the products database table.
         // Receive the new content URI that will allow us to access 'hard drive' data in the future.
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+        Log.d(LOG_TAG, " Got back new Uri: " + newUri);
     }
 
     @Override
@@ -85,11 +92,9 @@ public class ProductListActivity extends AppCompatActivity implements
             case R.id.action_insert_dummy_data:
                 insertProduct();
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         // Define a projection that specifies the columns from the table we care about.
@@ -100,6 +105,7 @@ public class ProductListActivity extends AppCompatActivity implements
                 ProductEntry.COLUMN_PRODUCT_PRICE,
                 ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID};
 
+        Log.d(LOG_TAG, " returning CursorLoader after a query inside onCreateLoader ");
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
                 ProductEntry.CONTENT_URI,   // Provider content URI to query
@@ -112,6 +118,7 @@ public class ProductListActivity extends AppCompatActivity implements
     @Override public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Update {@link ProductCursorAdapter} with this new cursor containing updated product data
         mCursorAdapter.swapCursor(cursor);
+        Log.d(LOG_TAG, " onLoadFinished is swapping cursor ");
     }
 
     @Override public void onLoaderReset(Loader<Cursor> loader) {
