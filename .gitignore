@@ -26,3 +26,5 @@
 .idea/libraries/support_annotations_26_0_0_alpha1.xml
 
 .idea/libraries/rules_0_5.xml
+
+build/intermediates/dex-cache/cache.xml

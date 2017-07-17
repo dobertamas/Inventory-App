@@ -19,7 +19,7 @@ import com.example.android.inventoryapp.data.ProductContract.ProductEntry;
 public class ProductListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String LOG_TAG = ProductListActivity.class.getSimpleName();
+    private static final String LOG_TAG = ProductListActivity.class.getSimpleName();
 
     /**
      * Identifier for the product data loader

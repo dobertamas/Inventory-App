@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-public class ProductDbHelper extends SQLiteOpenHelper {
+class ProductDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = ProductDbHelper.class.getSimpleName();
+    private static final String LOG_TAG = ProductDbHelper.class.getSimpleName();
 
     /**
      * Name of the database file
@@ -26,7 +26,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
      *
      * @param context
      */
-    public ProductDbHelper(Context context) {
+    ProductDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

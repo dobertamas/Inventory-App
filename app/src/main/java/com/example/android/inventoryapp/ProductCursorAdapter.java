@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.example.android.inventoryapp.data.ProductContract;
 
-public class ProductCursorAdapter extends CursorAdapter {
+class ProductCursorAdapter extends CursorAdapter {
 
-    public static final String LOG_TAG = ProductCursorAdapter.class.getSimpleName();
+    private static final String LOG_TAG = ProductCursorAdapter.class.getSimpleName();
 
-    public ProductCursorAdapter(Context context, Cursor cursor) {
+    ProductCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0 /* int flags */);
     }
 
