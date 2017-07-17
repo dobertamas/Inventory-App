@@ -18,7 +18,7 @@
         </activity>
         <provider
             android:name=".data.ProductProvider"
-            android:authorities="com.example.android.products"
+            android:authorities="com.example.android.inventoryapp"
             android:exported="false" />
 
     </application>
