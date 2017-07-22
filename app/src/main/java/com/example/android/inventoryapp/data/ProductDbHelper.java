@@ -43,7 +43,7 @@ class ProductDbHelper extends SQLiteOpenHelper {
 
         // Execute the SQL statement
         sqLiteDatabase.execSQL(SQL_CREATE_PRODUCTS_TABLE);
-        Log.d(LOG_TAG, " created DB ");
+        Log.i(LOG_TAG, " created DB ");
 
     }
 

@@ -1,8 +1,10 @@
 package com.example.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.inventoryapp.data.ProductContract.ProductEntry;
@@ -47,13 +50,35 @@ public class ProductListActivity extends AppCompatActivity implements
         // There is no product data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new ProductCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
-        Log.d(LOG_TAG, " Adapter was set ");
+        Log.i(LOG_TAG, " ProductCursorAdapter was set ");
 
         // TODO: Setup the item click listener
 
+        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Create new intent to go to {@link EditorActivity}
+                Intent productDetailIntent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
+
+                // Form the content URI that represents the specific product that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link ProductEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.android.inventoryapp/products/3"
+                // if the product with ID 3 was clicked on.
+                Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                productDetailIntent.setData(currentProductUri);
+
+                // Launch the {@link EditorActivity} to display the data for the current pet.
+                startActivity(productDetailIntent);
+            }
+        });
+
         // Kick off the loader
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
-        Log.d(LOG_TAG, " Kicked off the loader ");
+        Log.i(LOG_TAG, " Kicked off the loader ");
     }
 
     /**
@@ -73,7 +98,7 @@ public class ProductListActivity extends AppCompatActivity implements
         // into the products database table.
         // Receive the new content URI that will allow us to access 'hard drive' data in the future.
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
-        Log.d(LOG_TAG, " Got back new Uri: " + newUri);
+        Log.i(LOG_TAG, " Got back new Uri: " + newUri);
     }
 
     @Override
@@ -92,8 +117,17 @@ public class ProductListActivity extends AppCompatActivity implements
             case R.id.action_insert_dummy_data:
                 insertProduct();
                 return true;
+            // Respond to a click on the "Delete all data" menu option
+            case R.id.action_delete_all_data:
+                deleteAllData();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllData() {
+        int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+        Log.i(LOG_TAG, rowsDeleted + " rows deleted from pet database");
     }
 
     @Override public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -105,7 +139,7 @@ public class ProductListActivity extends AppCompatActivity implements
                 ProductEntry.COLUMN_PRODUCT_PRICE,
                 ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID};
 
-        Log.d(LOG_TAG, " returning CursorLoader after a query inside onCreateLoader ");
+        Log.i(LOG_TAG, " returning CursorLoader after a query inside onCreateLoader ");
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
                 ProductEntry.CONTENT_URI,   // Provider content URI to query
@@ -118,7 +152,7 @@ public class ProductListActivity extends AppCompatActivity implements
     @Override public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Update {@link ProductCursorAdapter} with this new cursor containing updated product data
         mCursorAdapter.swapCursor(cursor);
-        Log.d(LOG_TAG, " onLoadFinished is swapping cursor ");
+        Log.i(LOG_TAG, " onLoadFinished is swapping cursor ");
     }
 
     @Override public void onLoaderReset(Loader<Cursor> loader) {

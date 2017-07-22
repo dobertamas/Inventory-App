@@ -169,6 +169,7 @@ public class ProductProvider extends ContentProvider {
             case PRODUCTS:
                 // Delete all rows that match the selection and selection args
                 rowsDeleted = database.delete(ProductContract.ProductEntry.TABLE_NAME, selection, selectionArgs);
+                Log.i(LOG_TAG, " deleting every row ");
                 break;
             case PRODUCTS_ID:
                 // Delete a single row given by the ID in the URI

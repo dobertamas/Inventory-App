@@ -31,15 +31,15 @@ class ProductCursorAdapter extends CursorAdapter {
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
-        Log.d(LOG_TAG, " nameColumnIndex was: " + nameColumnIndex);
+        //Log.i(LOG_TAG, " nameColumnIndex was: " + nameColumnIndex);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
-        Log.d(LOG_TAG, " quantityColumnIndex was: " + quantityColumnIndex);
+        //Log.i(LOG_TAG, " quantityColumnIndex was: " + quantityColumnIndex);
 
         // Read the product attributes from the Cursor for the current product
         String productName = cursor.getString(nameColumnIndex);
-        Log.d(LOG_TAG, " productName was: " + productName);
+        Log.i(LOG_TAG, " productName was: " + productName);
         String productQuantity = cursor.getString(quantityColumnIndex);
-        Log.d(LOG_TAG, " productQuantity was: " + productQuantity);
+        Log.i(LOG_TAG, " productQuantity was: " + productQuantity);
 
         // Update the TextViews with the attributes for the current product
         nameTextView.setText(productName);
