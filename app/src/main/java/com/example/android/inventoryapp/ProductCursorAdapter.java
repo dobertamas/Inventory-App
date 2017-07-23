@@ -27,22 +27,27 @@ class ProductCursorAdapter extends CursorAdapter {
     @Override public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
+        TextView priceTextView = (TextView) view.findViewById(R.id.price);
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
         //Log.i(LOG_TAG, " nameColumnIndex was: " + nameColumnIndex);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         //Log.i(LOG_TAG, " quantityColumnIndex was: " + quantityColumnIndex);
+        int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
 
         // Read the product attributes from the Cursor for the current product
         String productName = cursor.getString(nameColumnIndex);
         Log.i(LOG_TAG, " productName was: " + productName);
         String productQuantity = cursor.getString(quantityColumnIndex);
         Log.i(LOG_TAG, " productQuantity was: " + productQuantity);
+        Double productPrice = cursor.getDouble(priceColumnIndex);
+        Log.i(LOG_TAG, " productPrice was: " + productPrice);
 
         // Update the TextViews with the attributes for the current product
         nameTextView.setText(productName);
-        summaryTextView.setText(productQuantity);
+        quantityTextView.setText(productQuantity);
+        priceTextView.setText(productPrice.toString());
     }
 }

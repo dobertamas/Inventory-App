@@ -43,10 +43,10 @@ public class ProductDetailActivity extends AppCompatActivity implements
      */
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
-    String mName;
-    String mQuantity;
-    Double mPrice;
-    Integer mProductId;
+    private String mName;
+    private String mQuantity;
+    private Double mPrice;
+    private Integer mProductId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

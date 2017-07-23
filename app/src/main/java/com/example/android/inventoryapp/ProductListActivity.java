@@ -32,7 +32,7 @@ public class ProductListActivity extends AppCompatActivity implements
     /**
      * Adapter for the ListView
      */
-    ProductCursorAdapter mCursorAdapter;
+    private ProductCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,6 @@ public class ProductListActivity extends AppCompatActivity implements
         mCursorAdapter = new ProductCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
         Log.i(LOG_TAG, " ProductCursorAdapter was set ");
-
-        // TODO: Setup the item click listener
 
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
