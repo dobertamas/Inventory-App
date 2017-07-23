@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
@@ -13,10 +14,14 @@ import com.example.android.inventoryapp.data.ProductContract;
 
 class ProductCursorAdapter extends CursorAdapter {
 
+    private Context mContext;
+
     private static final String LOG_TAG = ProductCursorAdapter.class.getSimpleName();
 
     ProductCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0 /* int flags */);
+        mContext = context;
+
     }
 
     @Override public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -24,10 +29,22 @@ class ProductCursorAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
     }
 
+   /* @Override public View getView(int position, View view, ViewGroup parent) {
+        LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+        TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
+        Button mEditButton = (Button) view.findViewById(R.id.list_item_edit_button);
+        Button mOrderButton = (Button) view.findViewById(R.id.list_item_order_button);
+        return super.getView(position, view, parent);
+
+    }*/
+
     @Override public void bindView(View view, Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
-        TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
+        TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.list_item_quantity);
+        Button editButton = (Button) view.findViewById(R.id.list_item_edit_button);
+        Button orderButton = (Button) view.findViewById(R.id.list_item_order_button);
+
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
@@ -43,6 +60,7 @@ class ProductCursorAdapter extends CursorAdapter {
 
         // Update the TextViews with the attributes for the current product
         nameTextView.setText(productName);
-        summaryTextView.setText(productQuantity);
+        quantityTextView.setText("Quantity: " + productQuantity);
+
     }
 }

@@ -106,10 +106,10 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // TODO:  int imageResourceId = cursor.getInt(imageResourceIdColumnIndex);
 
             // Update the views on the screen with the values from the database
-            mIdTextView.setText(mProductId.toString());
-            mProductNameTextView.setText(mName);
-            mQuantityTextView.setText(mQuantity);
-            mPriceTextView.setText(Double.toString(mPrice));
+            mIdTextView.setText("Product ID: " + mProductId.toString());
+            mProductNameTextView.setText("Product name: " + mName);
+            mQuantityTextView.setText("Product quantity: " + mQuantity);
+            mPriceTextView.setText("Product price: " + Double.toString(mPrice));
             // TODO: mProductImageResourceId
         }
 
@@ -132,16 +132,34 @@ public class ProductDetailActivity extends AppCompatActivity implements
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, mName);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(mQuantity) + 1);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, mPrice);
-        // values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "-1");
 
         String selection = "";
         String[] selectionArgs = {""};
-
 
         Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
         Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
         getContentResolver().update(currentProductUri, values, selection, selectionArgs);
 
+    }
+
+    @OnClick(R.id.product_detail_quantity_decrease_button)
+    public void decreaseProductQuantity() {
+        // Create a ContentValues object where column names are the keys,
+        // and product attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, mName);
+        if (Integer.valueOf(mQuantity) > 1) {
+            values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(mQuantity) - 1);
+        }
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, mPrice);
+
+        String selection = "";
+        String[] selectionArgs = {""};
+
+        Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
+        Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
+        getContentResolver().update(currentProductUri, values, selection, selectionArgs);
 
     }
+
 }

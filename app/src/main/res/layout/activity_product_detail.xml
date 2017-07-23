@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-medium"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#2B3D4D"/>
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"/>
 
         <TextView
             android:id="@+id/product_detail_quantity"
