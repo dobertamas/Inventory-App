@@ -5,4 +5,10 @@
     <string name="increase">Increase quantity</string>
     <string name="decrease">Decrease quantity</string>
     <string name="delete_product">Delete product</string>
+    <string name="id_of_the_product">ID of the product:</string>
+    <string name="name_of_the_product">Name of the product:</string>
+    <string name="quantity_of_the_product">Quantity of the product:</string>
+    <string name="price_of_the_product">Price of the product:</string>
+    <string name="image_resource_id_of_the_product">Image resource Id of the product:</string>
+    <string name="save_product">Save product</string>
 </resources>

@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -57,8 +59,8 @@ public class ProductDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
 
-        // If the intent DOES NOT contain a pet content URI, then we know that we are
-        // creating a new pet.
+        // If the intent DOES NOT contain a product content URI, then we know that we are
+        // creating a new product.
         if (mCurrentProductUri == null) {
             // This is a new product, so change the app bar to say "Add a product"
             setTitle("Add new product");
@@ -66,8 +68,9 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu();
-        } else {
-            // Otherwise this is an existing pet, so change app bar to say "Edit Pet"
+        }
+        else {
+            // Otherwise this is an existing product, so change app bar to say "Edit Product"
             setTitle("Edit product");
 
             // Initialize a loader to read the product data from the database
@@ -75,8 +78,28 @@ public class ProductDetailActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_productdetail, menu);
+        return true;
+    }
 
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            // Respond to a click on the "Save" menu option
+            case R.id.action_save_product:
+                // Save product to database
+                //    saveProduct();
+                // Exit activity
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {

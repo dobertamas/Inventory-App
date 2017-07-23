@@ -15,9 +15,9 @@
             android:id="@+id/product_id_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/id_of_the_product"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:text="ID of the product:"/>
+            android:textColor="#AEB6BD"/>
 
         <TextView
             android:id="@+id/product_id"
@@ -30,25 +30,25 @@
             android:id="@+id/product_detail_name_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/name_of_the_product"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:text="Name of the product:"/>
+            android:textColor="#AEB6BD"/>
 
         <EditText
             android:id="@+id/product_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#2B3D4D"
-            android:inputType="textCapWords"/>
+            android:textColor="#2B3D4D"/>
 
         <TextView
             android:id="@+id/product_detail_quantity_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/quantity_of_the_product"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:text="Quantity of the product:"/>
+            android:textColor="#AEB6BD"/>
 
         <TextView
             android:id="@+id/product_detail_quantity"
@@ -61,33 +61,33 @@
             android:id="@+id/product_detail_price_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/price_of_the_product"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:text="Price of the product:"/>
+            android:textColor="#AEB6BD"/>
 
         <EditText
             android:id="@+id/product_detail_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:inputType="numberDecimal"/>
+            android:textColor="#AEB6BD"/>
 
         <TextView
             android:id="@+id/product_detail_imageResourceId_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/image_resource_id_of_the_product"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:text="Image resource Id of the product:"/>
+            android:textColor="#AEB6BD"/>
 
         <EditText
             android:id="@+id/product_detail_imageResourceId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"
-            android:inputType="textNoSuggestions"/>
+            android:textColor="#AEB6BD"/>
 
     </LinearLayout>
 
