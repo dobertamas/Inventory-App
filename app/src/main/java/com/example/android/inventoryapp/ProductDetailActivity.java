@@ -98,7 +98,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save_product:
                 // Save product to database
-                saveProduct();
+                    saveProduct();
                 // Exit activity
                 finish();
                 return true;
@@ -111,13 +111,25 @@ public class ProductDetailActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveProduct() {
+    private void saveProduct()  {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String nameString = mProductNameTextView.getText().toString().trim();
         String quantityString = mQuantityTextView.getText().toString().trim();
         String priceString = mPriceTextView.getText().toString().trim();
         String imageResourceIdString = mProductImageResourceId.getText().toString().trim();
+        if (nameString == null || nameString.isEmpty()) {
+            Toast.makeText(this, "Product name can not be null", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (priceString == null || priceString.isEmpty()) {
+            Toast.makeText(this, "Product price can not be null", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (imageResourceIdString == null || imageResourceIdString.isEmpty()) {
+            Toast.makeText(this, "Product image can not be null", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
@@ -128,6 +140,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
+
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
@@ -207,21 +220,18 @@ public class ProductDetailActivity extends AppCompatActivity implements
             int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
-            // TODO: int imageResourceIdColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID);
 
             // Extract out the value from the Cursor for the given column index
             mProductId = cursor.getInt(idColumnIndex);
             mName = cursor.getString(nameColumnIndex);
             mQuantity = cursor.getString(quantityColumnIndex);
             mPrice = cursor.getDouble(priceColumnIndex);
-            // TODO:  int imageResourceId = cursor.getInt(imageResourceIdColumnIndex);
 
             // Update the views on the screen with the values from the database
             mIdTextView.setText(mProductId.toString());
             mProductNameTextView.setText(mName);
             mQuantityTextView.setText(mQuantity);
             mPriceTextView.setText(Double.toString(mPrice));
-            // TODO: mProductImageResourceId
         }
 
     }
@@ -231,8 +241,6 @@ public class ProductDetailActivity extends AppCompatActivity implements
         mProductNameTextView.setText("");
         mQuantityTextView.setText("");
         mPriceTextView.setText("");
-        // TODO: mProductImageResourceId
-
     }
 
     @OnClick(R.id.product_detail_quantity_increase_button)

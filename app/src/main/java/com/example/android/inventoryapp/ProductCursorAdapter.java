@@ -32,9 +32,7 @@ class ProductCursorAdapter extends CursorAdapter {
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
-        //Log.i(LOG_TAG, " nameColumnIndex was: " + nameColumnIndex);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
-        //Log.i(LOG_TAG, " quantityColumnIndex was: " + quantityColumnIndex);
         int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
 
         // Read the product attributes from the Cursor for the current product

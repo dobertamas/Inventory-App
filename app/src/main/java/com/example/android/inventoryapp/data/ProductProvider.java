@@ -88,7 +88,7 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException("Product requires a name");
         }
 
-        // Get writeable database
+        // Get writable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Insert the new product with the given values
