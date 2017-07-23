@@ -98,7 +98,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save_product:
                 // Save product to database
-                    saveProduct();
+                saveProduct();
                 // Exit activity
                 finish();
                 return true;
@@ -111,7 +111,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveProduct()  {
+    private void saveProduct() {
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
         String nameString = mProductNameTextView.getText().toString().trim();
@@ -301,14 +301,14 @@ public class ProductDetailActivity extends AppCompatActivity implements
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete this product?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.alert_message);
+        builder.setPositiveButton(R.string.alert_message_positive, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the product.
                 deleteProduct();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.alert_message_negative, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
                 // and continue editing the product.
