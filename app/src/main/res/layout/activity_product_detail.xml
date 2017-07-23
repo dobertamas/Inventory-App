@@ -39,6 +39,15 @@
             android:textColor="#AEB6BD"/>
 
         <TextView
+            android:id="@+id/product_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"/>
+
+        <TextView
             android:id="@+id/product_detail_imageResourceId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,4 +57,17 @@
             android:textColor="#AEB6BD"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/product_detail_quantity_increase_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/increase"/>
+
+    <Button
+        android:id="@+id/product_detail_quantity_decrease_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/decrease"/>
+
 </LinearLayout>

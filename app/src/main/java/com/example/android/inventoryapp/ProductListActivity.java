@@ -65,7 +65,7 @@ public class ProductListActivity extends AppCompatActivity implements
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link ProductEntry#CONTENT_URI}.
                 // For example, the URI would be "content://com.example.android.inventoryapp/products/3"
-                // if the product with ID 3 was clicked on.
+                // if the product with mProductId 3 was clicked on.
                 Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
 
                 // Set the URI on the data field of the intent

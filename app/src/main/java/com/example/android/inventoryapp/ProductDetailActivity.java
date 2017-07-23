@@ -1,6 +1,8 @@
 package com.example.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -8,20 +10,28 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.inventoryapp.data.ProductContract;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class ProductDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    @InjectView(R.id.product_detail_name) TextView mProductName;
-    @InjectView(R.id.product_detail_quantity) TextView mQuantity;
-    @InjectView(R.id.product_detail_price) TextView mPrice;
+    @InjectView(R.id.product_detail_name) TextView mProductNameTextView;
+    @InjectView(R.id.product_detail_quantity) TextView mQuantityTextView;
+    @InjectView(R.id.product_detail_price) TextView mPriceTextView;
+    @InjectView(R.id.product_id) TextView mIdTextView;
     @InjectView(R.id.product_detail_imageResourceId) TextView mProductImageResourceId;
+    @InjectView(R.id.product_detail_quantity_increase_button) Button mIncreaseButton;
+    @InjectView(R.id.product_detail_quantity_decrease_button) Button mDecreaseButton;
+
+    private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
     /**
      * Content URI for the existing product (null if it's a new product)
@@ -32,6 +42,11 @@ public class ProductDetailActivity extends AppCompatActivity implements
      * Identifier for the product data loader
      */
     private static final int EXISTING_PRODUCT_LOADER = 0;
+
+    String mName;
+    String mQuantity;
+    Double mPrice;
+    Integer mProductId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,21 +92,24 @@ public class ProductDetailActivity extends AppCompatActivity implements
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
             // Find the columns of product attributes that we're interested in
+            int idColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry._ID);
             int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
             // TODO: int imageResourceIdColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID);
 
             // Extract out the value from the Cursor for the given column index
-            String name = cursor.getString(nameColumnIndex);
-            String quantity = cursor.getString(quantityColumnIndex);
-            double price = cursor.getDouble(priceColumnIndex);
+            mProductId = cursor.getInt(idColumnIndex);
+            mName = cursor.getString(nameColumnIndex);
+            mQuantity = cursor.getString(quantityColumnIndex);
+            mPrice = cursor.getDouble(priceColumnIndex);
             // TODO:  int imageResourceId = cursor.getInt(imageResourceIdColumnIndex);
 
             // Update the views on the screen with the values from the database
-            mProductName.setText(name);
-            mQuantity.setText(quantity);
-            mPrice.setText(Double.toString(price));
+            mIdTextView.setText(mProductId.toString());
+            mProductNameTextView.setText(mName);
+            mQuantityTextView.setText(mQuantity);
+            mPriceTextView.setText(Double.toString(mPrice));
             // TODO: mProductImageResourceId
         }
 
@@ -99,10 +117,31 @@ public class ProductDetailActivity extends AppCompatActivity implements
 
     @Override public void onLoaderReset(Loader<Cursor> loader) {
         // If the loader is invalidated, clear out all the data from the input fields.
-        mProductName.setText("");
-        mQuantity.setText("");
-        mQuantity.setText("");
+        mProductNameTextView.setText("");
+        mQuantityTextView.setText("");
+        mPriceTextView.setText("");
         // TODO: mProductImageResourceId
+
+    }
+
+    @OnClick(R.id.product_detail_quantity_increase_button)
+    public void increaseProductQuantity() {
+        // Create a ContentValues object where column names are the keys,
+        // and product attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, mName);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(mQuantity) + 1);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, mPrice);
+        // values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "-1");
+
+        String selection = "";
+        String[] selectionArgs = {""};
+
+
+        Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
+        Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
+        getContentResolver().update(currentProductUri, values, selection, selectionArgs);
+
 
     }
 }

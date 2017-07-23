@@ -16,7 +16,7 @@ public class Product {
      */
     private double mPrice;
     /**
-     * Optional image resource ID for the product.
+     * Optional image resource mProductId for the product.
      */
     private int mImageResourceId;
     /**
