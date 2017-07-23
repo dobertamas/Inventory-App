@@ -57,9 +57,25 @@ public class ProductDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
 
-        // Initialize a loader to read the product data from the database
-        // and display the current values in the editor
-        getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
+        // If the intent DOES NOT contain a pet content URI, then we know that we are
+        // creating a new pet.
+        if (mCurrentProductUri == null) {
+            // This is a new product, so change the app bar to say "Add a product"
+            setTitle("Add new product");
+
+            // Invalidate the options menu, so the "Delete" menu option can be hidden.
+            // (It doesn't make sense to delete a product that hasn't been created yet.)
+            invalidateOptionsMenu();
+        } else {
+            // Otherwise this is an existing pet, so change app bar to say "Edit Pet"
+            setTitle("Edit product");
+
+            // Initialize a loader to read the product data from the database
+            // and display the current values in the editor
+            getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
+        }
+
+
 
     }
 

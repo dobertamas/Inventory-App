@@ -9,47 +9,85 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/product_detail_name"
-            android:layout_width="0dp"
+            android:id="@+id/product_id_label"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#2B3D4D"/>
-
-        <TextView
-            android:id="@+id/product_detail_quantity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"/>
-
-        <TextView
-            android:id="@+id/product_detail_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"/>
+            android:textColor="#AEB6BD"
+            android:text="ID of the product:"/>
 
         <TextView
             android:id="@+id/product_id"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"/>
 
         <TextView
-            android:id="@+id/product_detail_imageResourceId"
-            android:layout_width="0dp"
+            android:id="@+id/product_detail_name_label"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:text="Name of the product:"/>
+
+        <EditText
+            android:id="@+id/product_detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#2B3D4D"
+            android:inputType="textCapWords"/>
+
+        <TextView
+            android:id="@+id/product_detail_quantity_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:text="Quantity of the product:"/>
+
+        <TextView
+            android:id="@+id/product_detail_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"/>
+
+        <TextView
+            android:id="@+id/product_detail_price_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:text="Price of the product:"/>
+
+        <EditText
+            android:id="@+id/product_detail_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:id="@+id/product_detail_imageResourceId_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:text="Image resource Id of the product:"/>
+
+        <EditText
+            android:id="@+id/product_detail_imageResourceId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#AEB6BD"
+            android:inputType="textNoSuggestions"/>
 
     </LinearLayout>
 
