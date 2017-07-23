@@ -71,7 +71,7 @@ public class ProductListActivity extends AppCompatActivity implements
                 // Set the URI on the data field of the intent
                 productDetailIntent.setData(currentProductUri);
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the {@link EditorActivity} to display the data for the current product.
                 startActivity(productDetailIntent);
             }
         });
@@ -127,7 +127,7 @@ public class ProductListActivity extends AppCompatActivity implements
 
     private void deleteAllData() {
         int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
-        Log.i(LOG_TAG, rowsDeleted + " rows deleted from pet database");
+        Log.i(LOG_TAG, rowsDeleted + " rows deleted from product database");
     }
 
     @Override public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -158,6 +158,7 @@ public class ProductListActivity extends AppCompatActivity implements
     @Override public void onLoaderReset(Loader<Cursor> loader) {
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
+        Log.i(LOG_TAG, " onLoaderReset is swapping cursor to null ");
 
     }
 }

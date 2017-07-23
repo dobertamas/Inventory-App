@@ -29,10 +29,9 @@ public class ProductDetailActivity extends AppCompatActivity implements
     private Uri mCurrentProductUri;
 
     /**
-     * Identifier for the pet data loader
+     * Identifier for the product data loader
      */
     private static final int EXISTING_PRODUCT_LOADER = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
         // and display the current values in the editor
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
 
-
     }
-
 
     @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Since the page shows all product attributes, define a projection that contains
@@ -83,13 +80,13 @@ public class ProductDetailActivity extends AppCompatActivity implements
             int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
-            int imageResourceIdColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID);
+            // TODO: int imageResourceIdColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             String quantity = cursor.getString(quantityColumnIndex);
             double price = cursor.getDouble(priceColumnIndex);
-            int imageResourceId = cursor.getInt(imageResourceIdColumnIndex);
+            // TODO:  int imageResourceId = cursor.getInt(imageResourceIdColumnIndex);
 
             // Update the views on the screen with the values from the database
             mProductName.setText(name);
