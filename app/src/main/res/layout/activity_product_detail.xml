@@ -104,9 +104,9 @@
         android:text="@string/decrease"/>
 
     <Button
-        android:id="@+id/product_detail_quantity_delete_product"
+        android:id="@+id/product_detail_order_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/delete_product"/>
+        android:text="@string/order_more"/>
 
 </LinearLayout>
