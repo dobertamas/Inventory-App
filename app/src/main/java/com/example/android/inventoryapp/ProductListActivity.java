@@ -58,7 +58,7 @@ public class ProductListActivity extends AppCompatActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Create new intent to go to {@link EditorActivity}
+                // Create new intent to go to {@link ProductDetailActivity}
                 Intent productDetailIntent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
 
                 // Form the content URI that represents the specific product that was clicked on,

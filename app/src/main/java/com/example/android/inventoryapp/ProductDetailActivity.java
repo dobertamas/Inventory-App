@@ -132,16 +132,51 @@ public class ProductDetailActivity extends AppCompatActivity implements
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, mName);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(mQuantity) + 1);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, mPrice);
-        // values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "-1");
 
         String selection = "";
         String[] selectionArgs = {""};
-
 
         Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
         Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
         getContentResolver().update(currentProductUri, values, selection, selectionArgs);
 
+    }
+
+    @OnClick(R.id.product_detail_quantity_decrease_button)
+    public void decreaseProductQuantity() {
+        // Create a ContentValues object where column names are the keys,
+        // and product attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, mName);
+        if (Integer.valueOf(mQuantity) > 1) {
+            values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(mQuantity) - 1);
+        }
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, mPrice);
+
+        String selection = "";
+        String[] selectionArgs = {""};
+
+        Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
+        Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
+        getContentResolver().update(currentProductUri, values, selection, selectionArgs);
 
     }
+
+    @OnClick(R.id.product_detail_quantity_delete_product)
+    public void deleteProduct() {
+        Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, mProductId);
+        Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
+
+        String selection = ProductContract.ProductEntry._ID + "=?";
+        String[] selectionArgs = {String.valueOf(mProductId)};
+
+        int rowsDeleted = getContentResolver().delete(ProductContract.ProductEntry.CONTENT_URI, selection, selectionArgs);
+        Log.i(LOG_TAG, rowsDeleted + " row deleted from product database");
+
+        Intent productListIntent = new Intent(ProductDetailActivity.this, ProductListActivity.class);
+        startActivity(productListIntent);
+
+    }
+
 }
+
