@@ -273,6 +273,19 @@ public class ProductDetailActivity extends AppCompatActivity implements
 
     }
 
+    @OnClick(R.id.product_detail_order_button)
+    public void orderProduct() {
+        // Create new intent to go to send out en email
+        Intent sendingEmailIntent = new Intent(Intent.ACTION_SENDTO);
+        sendingEmailIntent.setType("text/plain");
+        sendingEmailIntent.putExtra(Intent.EXTRA_EMAIL, "supplier@supplier.com");
+        sendingEmailIntent.putExtra(Intent.EXTRA_SUBJECT, "Ordering your product");
+        // Our margin is only 20%
+        String orderDetails = "We'd like to order your " + mName + " at a price of " + mPrice * .08;
+        sendingEmailIntent.putExtra(Intent.EXTRA_TEXT, orderDetails);
+        startActivity(Intent.createChooser(sendingEmailIntent, "Send Email"));
+    }
+
     /**
      * Prompt the user to confirm that they want to delete this product.
      */

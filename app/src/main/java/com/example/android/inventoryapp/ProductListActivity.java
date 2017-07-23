@@ -111,6 +111,11 @@ public class ProductListActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
+            // Respond to a click on the "Delete all data" menu option
+            case R.id.goto_start_page:
+                // Create new intent to go to {@link MainActivity}
+                Intent startPageIntent = new Intent(ProductListActivity.this, MainActivity.class);
+                startActivity(startPageIntent);
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertProduct();

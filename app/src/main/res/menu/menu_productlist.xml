@@ -5,6 +5,11 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/goto_start_page"
+        android:title="@string/go_back_to_start_page"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_insert_dummy_data"
         android:title="@string/insert_dummy_data"
         app:showAsAction="never"/>

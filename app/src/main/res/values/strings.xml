@@ -3,7 +3,7 @@
     <string name="insert_dummy_data">Insert dummy data</string>
     <string name="delete_all_data">Delete all data</string>
     <string name="increase">Increase quantity</string>
-    <string name="decrease">Decrease quantity</string>
+    <string name="decrease">Sale - decrease quantity</string>
     <string name="delete_product">Delete product</string>
     <string name="id_of_the_product">ID of the product:</string>
     <string name="name_of_the_product">Name of the product:</string>
@@ -14,4 +14,5 @@
     <string name="empty_view_title_text">empty_view_title_text</string>
     <string name="empty_view_subtitle_text">empty_view_subtitle_text</string>
     <string name="order_more">order more</string>
+    <string name="go_back_to_start_page">Go back to Start page</string>
 </resources>
