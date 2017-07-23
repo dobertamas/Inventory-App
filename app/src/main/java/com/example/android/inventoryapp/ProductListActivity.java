@@ -89,8 +89,8 @@ public class ProductListActivity extends AppCompatActivity implements
         // and 'hard drive' attributes are the values.
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "hard drive");
+        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "3");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "150.00");
-        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "2");
         values.put(ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "-1");
 
         // Insert a new row for 'hard drive' into the provider using the ContentResolver.
