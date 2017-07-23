@@ -10,11 +10,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ProductContract;
 
@@ -94,12 +96,75 @@ public class ProductDetailActivity extends AppCompatActivity implements
             // Respond to a click on the "Save" menu option
             case R.id.action_save_product:
                 // Save product to database
-                //    saveProduct();
+                saveProduct();
                 // Exit activity
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveProduct() {
+        // Read from input fields
+        // Use trim to eliminate leading or trailing white space
+        String nameString = mProductNameTextView.getText().toString().trim();
+        String quantityString = mQuantityTextView.getText().toString().trim();
+        String priceString = mPriceTextView.getText().toString().trim();
+        String imageResourceIdString = mProductImageResourceId.getText().toString().trim();
+
+        // Check if this is supposed to be a new product
+        // and check if all the fields in the editor are blank
+        if (mCurrentProductUri == null &&
+                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
+                TextUtils.isEmpty(imageResourceIdString)) {
+            // Since no fields were modified, we can return early without creating a new product.
+            // No need to create ContentValues and no need to do any ContentProvider operations.
+            return;
+        }
+
+        // Create a ContentValues object where column names are the keys,
+        // and product attributes from the editor are the values.
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, imageResourceIdString);
+
+        // Determine if this is a new or existing product by checking if mCurrentProductUri is null or not
+        if (mCurrentProductUri == null) {
+            // This is a NEW product, so insert a new product into the provider,
+            // returning the content URI for the new product.
+            values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, "1");
+            Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
+
+            // Show a toast message depending on whether or not the insertion was successful.
+            if (newUri == null) {
+                // If the new content URI is null, then there was an error with insertion.
+                Toast.makeText(this, "Error with saving product", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                // Otherwise, the insertion was successful and we can display a toast.
+                Toast.makeText(this, "Product successfully saved! ", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentProductUri
+            // and pass in the new ContentValues. Pass in null for the selection and selection args
+            // because mCurrentProductUri will already identify the correct row in the database that
+            // we want to modify.
+            int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
+
+            // Show a toast message depending on whether or not the update was successful.
+            if (rowsAffected == 0) {
+                // If no rows were affected, then there was an error with the update.
+                Toast.makeText(this, "Error with updating product", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                // Otherwise, the update was successful and we can display a toast.
+                Toast.makeText(this, "Product successfully updated! ", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
