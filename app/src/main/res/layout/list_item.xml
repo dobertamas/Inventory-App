@@ -33,4 +33,11 @@
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#AEB6BD"/>
 
+    <Button
+        android:id="@+id/sale_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sale_button"
+        android:focusable="false"/>
+
 </LinearLayout>

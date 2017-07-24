@@ -1,11 +1,15 @@
 package com.example.android.inventoryapp;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
@@ -22,32 +26,6 @@ class ProductCursorAdapter extends CursorAdapter {
         mContext = context;
     }
 
-  /*  @Override public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
-
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item, null);
-            holder = new ViewHolder();
-            holder.nameTextView = (TextView) convertView.findViewById(R.id.name);
-            holder.quantityTextView = (TextView) convertView.findViewById(R.id.quantity);
-            holder.priceTextView = (TextView) convertView.findViewById(R.id.price);
-
-            convertView.setTag(holder);
-        }
-        else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        Product product = (Product) getItem(position);
-
-        holder.nameTextView.setText(product.getName());
-        holder.quantityTextView.setText(product.getQuantity());
-        holder.priceTextView.setText(String.valueOf(product.getPrice()));
-
-        return convertView;
-    }*/
-
     @Override public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // Inflate a list item view using the layout specified in list_item.xml
         View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
@@ -59,36 +37,55 @@ class ProductCursorAdapter extends CursorAdapter {
     @Override public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        // Find the columns of product attributes that we're interested in
+        // Find the columns of product attributes that we're interested in from the cursor
+        int idColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry._ID);
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
 
         // Read the product attributes from the Cursor for the current product
-        String productName = cursor.getString(nameColumnIndex);
-        Log.i(LOG_TAG, " productName was: " + productName);
-        String productQuantity = cursor.getString(quantityColumnIndex);
-        Log.i(LOG_TAG, " productQuantity was: " + productQuantity);
-        Double productPrice = cursor.getDouble(priceColumnIndex);
-        Log.i(LOG_TAG, " productPrice was: " + productPrice);
+        final Integer productId = cursor.getInt(idColumnIndex);
+        final String productName = cursor.getString(nameColumnIndex);
+        final String productQuantity = cursor.getString(quantityColumnIndex);
+        final Double productPrice = cursor.getDouble(priceColumnIndex);
 
         // Update the TextViews with the attributes for the current product
         viewHolder.nameTextView.setText(productName);
         viewHolder.quantityTextView.setText(productQuantity);
         viewHolder.priceTextView.setText(productPrice.toString());
+        viewHolder.saleButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                // Create a ContentValues object where column names are the keys,
+                // and product attributes are the values.
+                ContentValues values = new ContentValues();
+                values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, productName);
+                if (Integer.valueOf(productQuantity) > 1) {
+                    values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.valueOf(productQuantity) - 1);
+                }
+                values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, productPrice);
+
+                String selection = "";
+                String[] selectionArgs = {""};
+
+                Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, productId);
+                Log.i(LOG_TAG, " currentProductUri: " + currentProductUri.toString());
+                mContext.getContentResolver().update(currentProductUri, values, selection, selectionArgs);
+            }
+        });
     }
 
     private static class ViewHolder {
         TextView nameTextView;
         TextView quantityTextView;
         TextView priceTextView;
+        Button saleButton;
 
         ViewHolder(View view) {
             // Find individual views that we want to modify in the list item layout
             nameTextView = (TextView) view.findViewById(R.id.name);
             quantityTextView = (TextView) view.findViewById(R.id.quantity);
             priceTextView = (TextView) view.findViewById(R.id.price);
-
+            saleButton = (Button) view.findViewById(R.id.sale_button);
         }
     }
 
