@@ -15,20 +15,49 @@ class ProductCursorAdapter extends CursorAdapter {
 
     private static final String LOG_TAG = ProductCursorAdapter.class.getSimpleName();
 
+    private Context mContext;
+
     ProductCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0 /* int flags */);
+        mContext = context;
     }
+
+  /*  @Override public View getView(int position, View convertView, ViewGroup parent) {
+
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item, null);
+            holder = new ViewHolder();
+            holder.nameTextView = (TextView) convertView.findViewById(R.id.name);
+            holder.quantityTextView = (TextView) convertView.findViewById(R.id.quantity);
+            holder.priceTextView = (TextView) convertView.findViewById(R.id.price);
+
+            convertView.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        Product product = (Product) getItem(position);
+
+        holder.nameTextView.setText(product.getName());
+        holder.quantityTextView.setText(product.getQuantity());
+        holder.priceTextView.setText(String.valueOf(product.getPrice()));
+
+        return convertView;
+    }*/
 
     @Override public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // Inflate a list item view using the layout specified in list_item.xml
-        return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
+        return view;
     }
 
     @Override public void bindView(View view, Context context, Cursor cursor) {
-        // Find individual views that we want to modify in the list item layout
-        TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
-        TextView priceTextView = (TextView) view.findViewById(R.id.price);
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
@@ -44,8 +73,23 @@ class ProductCursorAdapter extends CursorAdapter {
         Log.i(LOG_TAG, " productPrice was: " + productPrice);
 
         // Update the TextViews with the attributes for the current product
-        nameTextView.setText(productName);
-        quantityTextView.setText(productQuantity);
-        priceTextView.setText(productPrice.toString());
+        viewHolder.nameTextView.setText(productName);
+        viewHolder.quantityTextView.setText(productQuantity);
+        viewHolder.priceTextView.setText(productPrice.toString());
     }
+
+    private static class ViewHolder {
+        TextView nameTextView;
+        TextView quantityTextView;
+        TextView priceTextView;
+
+        ViewHolder(View view) {
+            // Find individual views that we want to modify in the list item layout
+            nameTextView = (TextView) view.findViewById(R.id.name);
+            quantityTextView = (TextView) view.findViewById(R.id.quantity);
+            priceTextView = (TextView) view.findViewById(R.id.price);
+
+        }
+    }
+
 }
