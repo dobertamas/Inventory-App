@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.add_product_button) Button mAddProductButton;
     @InjectView(R.id.list_products_button) Button mListProductsButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +24,14 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onClick(View v) {
                 Intent productListIntent = new Intent(MainActivity.this, ProductDetailActivity.class);
                 startActivity(productListIntent);
-
             }
         });
-
 
         mListProductsButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent productListIntent = new Intent(MainActivity.this, ProductListActivity.class);
                 startActivity(productListIntent);
-
-
             }
         });
     }
-
 }

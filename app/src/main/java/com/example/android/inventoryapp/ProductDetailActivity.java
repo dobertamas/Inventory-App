@@ -99,8 +99,6 @@ public class ProductDetailActivity extends AppCompatActivity implements
             case R.id.action_save_product:
                 // Save product to database
                 saveProduct();
-                // Exit activity
-                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete_product:
@@ -165,6 +163,8 @@ public class ProductDetailActivity extends AppCompatActivity implements
             else {
                 // Otherwise, the insertion was successful and we can display a toast.
                 Toast.makeText(this, "Product successfully saved! ", Toast.LENGTH_SHORT).show();
+                // Exit activity
+                finish();
             }
         }
         else {
@@ -308,15 +308,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
                 deleteProduct();
             }
         });
-        builder.setNegativeButton(R.string.alert_message_negative, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the product.
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
+        builder.setNegativeButton(R.string.alert_message_negative, null);
 
         // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
