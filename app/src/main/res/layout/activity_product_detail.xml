@@ -72,7 +72,7 @@
             android:inputType="numberDecimal"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"/>
-
+<!--
         <TextView
             android:id="@+id/product_detail_imageResourceId_label"
             android:layout_width="match_parent"
@@ -88,6 +88,12 @@
             android:inputType="textNoSuggestions"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#AEB6BD"/>
+            -->
+
+        <Spinner
+            android:id="@+id/images_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

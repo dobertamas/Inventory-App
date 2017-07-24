@@ -17,7 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +31,13 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class ProductDetailActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemSelectedListener {
 
     @InjectView(R.id.product_detail_name) TextView mProductNameTextView;
     @InjectView(R.id.product_detail_quantity) TextView mQuantityTextView;
     @InjectView(R.id.product_detail_price) TextView mPriceTextView;
     @InjectView(R.id.product_id) TextView mIdTextView;
-    @InjectView(R.id.product_detail_imageResourceId) TextView mProductImageResourceId;
+   // @InjectView(R.id.product_detail_imageResourceId) TextView mProductImageResourceId;
     @InjectView(R.id.product_detail_quantity_increase_button) Button mIncreaseButton;
     @InjectView(R.id.product_detail_quantity_decrease_button) Button mDecreaseButton;
     @InjectView(R.id.product_detail_order_button) Button mOrderButton;
@@ -55,6 +58,8 @@ public class ProductDetailActivity extends AppCompatActivity implements
     private String mQuantity;
     private Double mPrice;
     private Integer mProductId;
+
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +94,25 @@ public class ProductDetailActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
+        spinner = (Spinner) findViewById(R.id.images_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.images_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        Log.i(LOG_TAG, "spinner selected");
+    }
+
+    @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        parent.getItemAtPosition(position);
+
+    }
+
+    @Override public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     @Override
@@ -122,7 +146,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
         String nameString = mProductNameTextView.getText().toString().trim();
         String quantityString = mQuantityTextView.getText().toString().trim();
         String priceString = mPriceTextView.getText().toString().trim();
-        String imageResourceIdString = mProductImageResourceId.getText().toString().trim();
+        /*String imageResourceIdString = mProductImageResourceId.getText().toString().trim();*/
         if (nameString == null || nameString.isEmpty()) {
             Toast.makeText(this, "Product name can not be null", Toast.LENGTH_LONG).show();
             return;
@@ -131,21 +155,19 @@ public class ProductDetailActivity extends AppCompatActivity implements
             Toast.makeText(this, "Product price can not be null", Toast.LENGTH_LONG).show();
             return;
         }
-        if (imageResourceIdString == null || imageResourceIdString.isEmpty()) {
+       /* if (imageResourceIdString == null || imageResourceIdString.isEmpty()) {
             Toast.makeText(this, "Product image can not be null", Toast.LENGTH_LONG).show();
             return;
-        }
+        }*/
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentProductUri == null &&
-                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
-                TextUtils.isEmpty(imageResourceIdString)) {
+                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString)) {
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
-
 
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
@@ -153,7 +175,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
         values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
-        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, imageResourceIdString);
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, spinner.getSelectedItem().toString());
 
         // Determine if this is a new or existing product by checking if mCurrentProductUri is null or not
         if (mCurrentProductUri == null) {
