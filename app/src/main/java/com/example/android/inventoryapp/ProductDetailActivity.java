@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
     @InjectView(R.id.product_detail_imageResourceId) TextView mProductImageResourceId;
     @InjectView(R.id.product_detail_quantity_increase_button) Button mIncreaseButton;
     @InjectView(R.id.product_detail_quantity_decrease_button) Button mDecreaseButton;
+    @InjectView(R.id.product_detail_order_button) Button mOrderButton;
 
     private static final String LOG_TAG = ProductDetailActivity.class.getSimpleName();
 
@@ -68,6 +70,11 @@ public class ProductDetailActivity extends AppCompatActivity implements
         if (mCurrentProductUri == null) {
             // This is a new product, so change the app bar to say "Add a product"
             setTitle("Add new product");
+
+            // When adding a new product we don't want to change the quantity just yet.
+            mIncreaseButton.setVisibility(View.INVISIBLE);
+            mDecreaseButton.setVisibility(View.INVISIBLE);
+            mOrderButton.setVisibility(View.INVISIBLE);
 
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
