@@ -93,7 +93,7 @@ public class ProductContract {
         /**
          * ResourceId for image of the product.
          * <p>
-         * Type: INTEGER
+         * Type: TEXT
          */
         public final static String COLUMN_PRODUCT_IMAGERESOURCEID = "imageResourceId";
     }

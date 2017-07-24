@@ -3,6 +3,7 @@ package com.example.android.inventoryapp;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.inventoryapp.data.ProductContract;
@@ -42,17 +44,24 @@ class ProductCursorAdapter extends CursorAdapter {
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
+        int imageColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID);
 
         // Read the product attributes from the Cursor for the current product
         final Integer productId = cursor.getInt(idColumnIndex);
         final String productName = cursor.getString(nameColumnIndex);
         final String productQuantity = cursor.getString(quantityColumnIndex);
         final Double productPrice = cursor.getDouble(priceColumnIndex);
+        final String productImage = cursor.getString(imageColumnIndex);
 
         // Update the TextViews with the attributes for the current product
         viewHolder.nameTextView.setText(productName);
         viewHolder.quantityTextView.setText(productQuantity);
         viewHolder.priceTextView.setText(productPrice.toString());
+
+        Resources r = mContext.getResources();
+        int drawableId = r.getIdentifier(productImage, "drawable", "com.example.android.inventoryapp");
+        viewHolder.imageView.setImageResource(drawableId);
+
         viewHolder.saleButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 // Create a ContentValues object where column names are the keys,
@@ -79,12 +88,14 @@ class ProductCursorAdapter extends CursorAdapter {
         TextView quantityTextView;
         TextView priceTextView;
         Button saleButton;
+        ImageView imageView;
 
         ViewHolder(View view) {
             // Find individual views that we want to modify in the list item layout
             nameTextView = (TextView) view.findViewById(R.id.name);
             quantityTextView = (TextView) view.findViewById(R.id.quantity);
             priceTextView = (TextView) view.findViewById(R.id.price);
+            imageView = (ImageView) view.findViewById(R.id.image_view);
             saleButton = (Button) view.findViewById(R.id.sale_button);
         }
     }

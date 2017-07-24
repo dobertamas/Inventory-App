@@ -20,11 +20,11 @@
     <string name="alert_message.negative">Cancel</string>
     <string name="sale_button">Sale Button</string>
     <string-array name="images_array">
-        <item>R.drawable.atlas</item>
-        <item>R.drawable.greek_house</item>
-        <item>R.drawable.jasmine</item>
-        <item>R.drawable.oi</item>
-        <item>R.drawable.pitapockets</item>
-        <item>R.drawable.pronpiya</item>
+        <item>atlas</item>
+        <item>greek_house</item>
+        <item>jasmine</item>
+        <item>oi</item>
+        <item>pitapockets</item>
+        <item>pronpiya</item>
     </string-array>
 </resources>

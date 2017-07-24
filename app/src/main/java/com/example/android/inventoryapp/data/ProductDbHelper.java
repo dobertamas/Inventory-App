@@ -39,7 +39,7 @@ class ProductDbHelper extends SQLiteOpenHelper {
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID + " INTEGER DEFAULT -1);";
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID + " TEXT);";
 
         // Execute the SQL statement
         sqLiteDatabase.execSQL(SQL_CREATE_PRODUCTS_TABLE);

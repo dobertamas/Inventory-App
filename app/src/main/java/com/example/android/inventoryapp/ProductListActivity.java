@@ -89,7 +89,7 @@ public class ProductListActivity extends AppCompatActivity implements
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "hard drive");
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "3");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "150.00");
-        values.put(ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "-1");
+        values.put(ProductEntry.COLUMN_PRODUCT_IMAGERESOURCEID, "oi");
 
         // Insert a new row for 'hard drive' into the provider using the ContentResolver.
         // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert
